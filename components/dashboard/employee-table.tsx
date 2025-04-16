@@ -3,10 +3,13 @@ import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../ui/table";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 type Employee = {
   // id: number;
@@ -41,8 +44,9 @@ export default function EmployeeTable() {
           <TableHead>Employee</TableHead>
           <TableHead>Backlog</TableHead>
           <TableHead>Overtime Hours</TableHead>
+          <TableHead>Idle Hours</TableHead>
           {/* <TableHead></TableHead> */}
-          <TableHead className="text-right">Learn More</TableHead>
+          <TableHead className="text-right">Details</TableHead>
         </TableRow>
         {!employees ? (
           <TableRow>
@@ -54,11 +58,20 @@ export default function EmployeeTable() {
           Object.entries(employees).map(
             ([key, employee]: [string, Employee]) => (
               <TableRow key={key}>
-                <TableHead>{employee.name}</TableHead>
-                <TableHead>{employee.backlog}</TableHead>
-                <TableHead>{employee.overtime}</TableHead>
-                {/* <TableHead></TableHead> */}
-                <TableHead className="text-right">Learn More</TableHead>
+                <TableCell>{employee.name}</TableCell>
+                <TableCell>{employee.backlog}</TableCell>
+                <TableCell>{employee.overtime}</TableCell>
+                <TableCell>{employee.idle}</TableCell>
+                {/* <TableCell></TableCell> */}
+                <TableCell className="text-right">
+                  <Button
+                    variant="link"
+                    className="text-sm text-blue-500"
+                    asChild
+                  >
+                    <Link href={`/dashboard/employees/${key}`}>Learn More</Link>
+                  </Button>
+                </TableCell>
               </TableRow>
             )
           )
