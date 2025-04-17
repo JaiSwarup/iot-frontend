@@ -1,33 +1,52 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Download, Filter } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Download, Filter } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface User {
-  email: string
-  role: string
-  name: string
+  email: string;
+
+  name: string;
 }
 
 export default function ReportsPage() {
-  const [user, setUser] = useState<User | null>(null)
-  const [reportType, setReportType] = useState("performance")
-  const [timeFrame, setTimeFrame] = useState("month")
+  const [user, setUser] = useState<User | null>(null);
+  const [reportType, setReportType] = useState("performance");
+  const [timeFrame, setTimeFrame] = useState("month");
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      setUser(JSON.parse(storedUser));
     }
-  }, [])
+  }, []);
 
   if (!user) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -36,9 +55,7 @@ export default function ReportsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
           <p className="text-muted-foreground">
-            {user.role === "boss"
-              ? "Generate and view reports for your team and projects"
-              : "View your personal reports and performance metrics"}
+            Generate and view reports for your team and projects
           </p>
         </div>
         <Button>
@@ -63,7 +80,7 @@ export default function ReportsPage() {
                 <SelectContent>
                   <SelectItem value="performance">Performance</SelectItem>
                   <SelectItem value="projects">Projects</SelectItem>
-                  {user.role === "boss" && <SelectItem value="team">Team</SelectItem>}
+                  <SelectItem value="team">Team</SelectItem>
                   <SelectItem value="financial">Financial</SelectItem>
                 </SelectContent>
               </Select>
@@ -123,7 +140,9 @@ export default function ReportsPage() {
                     <TableCell>Good</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">Task Completion</TableCell>
+                    <TableCell className="font-medium">
+                      Task Completion
+                    </TableCell>
                     <TableCell>92%</TableCell>
                     <TableCell className="text-green-600">+3%</TableCell>
                     <TableCell>Excellent</TableCell>
@@ -156,25 +175,33 @@ export default function ReportsPage() {
                 </TableHeader>
                 <TableBody>
                   <TableRow>
-                    <TableCell className="font-medium">Website Redesign</TableCell>
+                    <TableCell className="font-medium">
+                      Website Redesign
+                    </TableCell>
                     <TableCell>In Progress</TableCell>
                     <TableCell>75%</TableCell>
                     <TableCell>Jun 30, 2025</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">Mobile App Development</TableCell>
+                    <TableCell className="font-medium">
+                      Mobile App Development
+                    </TableCell>
                     <TableCell>In Progress</TableCell>
                     <TableCell>45%</TableCell>
                     <TableCell>Aug 15, 2025</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">API Integration</TableCell>
+                    <TableCell className="font-medium">
+                      API Integration
+                    </TableCell>
                     <TableCell>In Progress</TableCell>
                     <TableCell>90%</TableCell>
                     <TableCell>May 20, 2025</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell className="font-medium">Database Migration</TableCell>
+                    <TableCell className="font-medium">
+                      Database Migration
+                    </TableCell>
                     <TableCell>Completed</TableCell>
                     <TableCell>100%</TableCell>
                     <TableCell>Apr 10, 2025</TableCell>
@@ -183,7 +210,7 @@ export default function ReportsPage() {
               </Table>
             )}
 
-            {reportType === "team" && user.role === "boss" && (
+            {reportType === "team" && (
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -233,61 +260,34 @@ export default function ReportsPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {user.role === "boss" ? (
-                    <>
-                      <TableRow>
-                        <TableCell className="font-medium">Project Revenue</TableCell>
-                        <TableCell>$125,000</TableCell>
-                        <TableCell className="text-green-600">+12%</TableCell>
-                        <TableCell>Good</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Operational Costs</TableCell>
-                        <TableCell>$78,500</TableCell>
-                        <TableCell className="text-amber-600">+5%</TableCell>
-                        <TableCell>Attention</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Team Budget</TableCell>
-                        <TableCell>$45,000</TableCell>
-                        <TableCell className="text-green-600">+0%</TableCell>
-                        <TableCell>Stable</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Net Profit</TableCell>
-                        <TableCell>$46,500</TableCell>
-                        <TableCell className="text-green-600">+18%</TableCell>
-                        <TableCell>Excellent</TableCell>
-                      </TableRow>
-                    </>
-                  ) : (
-                    <>
-                      <TableRow>
-                        <TableCell className="font-medium">Credits Earned</TableCell>
-                        <TableCell>1,250</TableCell>
-                        <TableCell className="text-green-600">+350</TableCell>
-                        <TableCell>Good</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Bonus Points</TableCell>
-                        <TableCell>450</TableCell>
-                        <TableCell className="text-green-600">+120</TableCell>
-                        <TableCell>Good</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Credits Used</TableCell>
-                        <TableCell>200</TableCell>
-                        <TableCell className="text-amber-600">+50</TableCell>
-                        <TableCell>Normal</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">Available Balance</TableCell>
-                        <TableCell>1,500</TableCell>
-                        <TableCell className="text-green-600">+420</TableCell>
-                        <TableCell>Excellent</TableCell>
-                      </TableRow>
-                    </>
-                  )}
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Project Revenue
+                    </TableCell>
+                    <TableCell>$125,000</TableCell>
+                    <TableCell className="text-green-600">+12%</TableCell>
+                    <TableCell>Good</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">
+                      Operational Costs
+                    </TableCell>
+                    <TableCell>$78,500</TableCell>
+                    <TableCell className="text-amber-600">+5%</TableCell>
+                    <TableCell>Attention</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Team Budget</TableCell>
+                    <TableCell>$45,000</TableCell>
+                    <TableCell className="text-green-600">+0%</TableCell>
+                    <TableCell>Stable</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Net Profit</TableCell>
+                    <TableCell>$46,500</TableCell>
+                    <TableCell className="text-green-600">+18%</TableCell>
+                    <TableCell>Excellent</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             )}
@@ -295,5 +295,5 @@ export default function ReportsPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

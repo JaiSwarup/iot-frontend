@@ -1,46 +1,55 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export default function SignInPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [role, setRole] = useState("employee")
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [role, setRole] = useState("employee")
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignIn = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // In a real app, you would validate credentials against a backend
     // For demo purposes, we'll simulate authentication and store user info in localStorage
     const user = {
       email,
-      role,
+      // role,
       name: email.split("@")[0], // Simple name extraction from email
-    }
+    };
 
-    localStorage.setItem("user", JSON.stringify(user))
-    router.push("/dashboard")
-  }
+    localStorage.setItem("user", JSON.stringify(user));
+    router.push("/dashboard");
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Sign in</CardTitle>
-          <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardDescription>
+            Enter your credentials to access your account
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSignIn}>
           <CardContent className="space-y-4">
@@ -74,14 +83,20 @@ export default function SignInPage() {
                   className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                  <span className="sr-only">
+                    {showPassword ? "Hide password" : "Show password"}
+                  </span>
                 </Button>
               </div>
             </div>
             <div className="space-y-2">
               <Label>Sign in as</Label>
-              <RadioGroup defaultValue="employee" className="flex space-x-4" value={role} onValueChange={setRole}>
+              {/* <RadioGroup defaultValue="employee" className="flex space-x-4" value={role} onValueChange={setRole}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="employee" id="employee" />
                   <Label htmlFor="employee">Employee</Label>
@@ -90,7 +105,7 @@ export default function SignInPage() {
                   <RadioGroupItem value="boss" id="boss" />
                   <Label htmlFor="boss">Manager</Label>
                 </div>
-              </RadioGroup>
+              </RadioGroup> */}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
@@ -107,5 +122,5 @@ export default function SignInPage() {
         </form>
       </Card>
     </div>
-  )
+  );
 }

@@ -6,7 +6,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CircleProgress } from "@/components/ui/progress";
-import { Table, TableCell, TableHead, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type Entry = {
   timestamp: string;
@@ -39,22 +46,24 @@ export default async function EmployeePage({
           </CardHeader>
           <CardContent>
             <Table>
-              <TableRow>
-                <TableCell>Backlog</TableCell>
-                <TableCell>{profile.backlog}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Overtime</TableCell>
-                <TableCell>{profile.overtime}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Credits</TableCell>
-                <TableCell>{profile.credits}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Idle</TableCell>
-                <TableCell>{profile.idle}</TableCell>
-              </TableRow>
+              <TableBody>
+                <TableRow>
+                  <TableCell>Backlog</TableCell>
+                  <TableCell>{profile.backlog}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Overtime</TableCell>
+                  <TableCell>{profile.overtime}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Credits</TableCell>
+                  <TableCell>{profile.credits}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Idle</TableCell>
+                  <TableCell>{profile.idle}</TableCell>
+                </TableRow>
+              </TableBody>
             </Table>
           </CardContent>
         </Card>
@@ -67,30 +76,34 @@ export default async function EmployeePage({
           </CardHeader>
           <CardContent>
             <Table>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Time</TableHead>
-                <TableHead>Value</TableHead>
-              </TableRow>
-              {entries.map((entry: Entry, index: number) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {new Date(entry.timestamp).toLocaleString("en-US", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(entry.timestamp).toLocaleString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    })}
-                  </TableCell>
-                  <TableCell>{entry.value}</TableCell>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Time</TableHead>
+                  <TableHead>Value</TableHead>
                 </TableRow>
-              ))}
+              </TableHeader>
+              <TableBody>
+                {entries.map((entry: Entry, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      {new Date(entry.timestamp).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(entry.timestamp).toLocaleString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      })}
+                    </TableCell>
+                    <TableCell>{entry.value}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
             </Table>
           </CardContent>
         </Card>

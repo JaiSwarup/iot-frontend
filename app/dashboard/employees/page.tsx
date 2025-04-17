@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { redirect } from "next/navigation";
 import EmployeeTable from "@/components/dashboard/employee-table";
 
 interface User {
   email: string;
-  role: string;
+
   name: string;
 }
 
@@ -23,9 +22,6 @@ export default function EmployeePage() {
   if (!user) {
     return <div>Loading...</div>;
   }
-  if (user.role !== "boss") {
-    redirect("/dashboard");
-  }
 
   return (
     <div className="space-y-6">
@@ -33,9 +29,7 @@ export default function EmployeePage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Employees</h1>
           <p className="text-muted-foreground">
-            {user.role === "boss"
-              ? "Generate and view reports for your team and projects"
-              : "View your personal reports and performance metrics"}
+            Generate and view reports for your team and projects
           </p>
         </div>
       </div>

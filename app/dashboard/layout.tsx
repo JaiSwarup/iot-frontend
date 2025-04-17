@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { BarChart3, Home, LogOut, PieChart, Users } from "lucide-react";
+import { BarChart3, Home, LogOut, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,10 +18,11 @@ import {
   SidebarProvider,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import Link from "next/link";
 
 interface User {
   email: string;
-  role: string;
   name: string;
 }
 
@@ -68,20 +69,21 @@ export default function DashboardLayout({
           <SidebarHeader className="flex flex-row h-auto items-center border-b px-3">
             <span className="font-bold text-3xl">WorkFlow</span>
             <span className="ml-2 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
-              {user?.role === "boss" ? "Manager" : "Employee"}
+              Manager
             </span>
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname === "/dashboard"}>
-                  <a
+                  <Link
+                    legacyBehavior
                     href="/dashboard"
-                    className="flex gap-2 items-center py-3 px-2"
+                    className="flex gap-2 items-center py-3 px-2 flex-col"
                   >
-                    <Home className="h-6 w-6 shrink-0" />
+                    <Home className="h-8 w-8 shrink-0" />
                     <span>Overview</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -89,45 +91,46 @@ export default function DashboardLayout({
                   asChild
                   isActive={pathname === "/dashboard/analytics"}
                 >
-                  <a
+                  <Link
+                    legacyBehavior
                     href="/dashboard/analytics"
-                    className="flex gap-2 items-center py-3 px-2"
+                    className="flex gap-2 items-center py-3 px-2 flex-col"
                   >
                     <BarChart3 className="h-6 w-6 shrink-0" />
                     <span>Analytics</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              <SidebarMenuItem>
+              {/* <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === "/dashboard/reports"}
                 >
-                  <a
+                  <Link
+                  legacyBehavior
                     href="/dashboard/reports"
-                    className="flex gap-2 items-center py-3 px-2"
+                    className="flex gap-2 items-center py-3 px-2 flex-col"
                   >
                     <PieChart className="h-6 w-6 shrink-0" />
                     <span>Reports</span>
-                  </a>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem> */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/dashboard/employees"}
+                >
+                  <Link
+                    legacyBehavior
+                    href="/dashboard/employees"
+                    className="flex gap-2 items-center py-3 px-2 flex-col"
+                  >
+                    <Users className="h-6 w-6 shrink-0" />
+                    <span>Employees</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              {user?.role === "boss" && (
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === "/dashboard/employees"}
-                  >
-                    <a
-                      href="/dashboard/employees"
-                      className="flex gap-2 items-center py-3 px-2"
-                    >
-                      <Users className="h-6 w-6 shrink-0" />
-                      <span>Employees</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
             </SidebarMenu>
           </SidebarContent>
           <SidebarSeparator />
@@ -157,6 +160,7 @@ export default function DashboardLayout({
         </Sidebar>
         <div className="flex flex-col">
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+            <Toaster richColors />
             {children}
           </main>
         </div>

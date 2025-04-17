@@ -1,29 +1,35 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { BarChart, LineChart, PieChart } from "lucide-react"
+import { useEffect, useState } from "react";
+import { BarChart, LineChart, PieChart } from "lucide-react";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface User {
-  email: string
-  role: string
-  name: string
+  email: string;
+
+  name: string;
 }
 
 export default function AnalyticsPage() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      setUser(JSON.parse(storedUser));
     }
-  }, [])
+  }, []);
 
   if (!user) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -31,9 +37,7 @@ export default function AnalyticsPage() {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
         <p className="text-muted-foreground">
-          {user.role === "boss"
-            ? "Detailed analytics about your team and projects"
-            : "Detailed analytics about your performance and projects"}
+          Detailed analytics about your team and projects
         </p>
       </div>
 
@@ -41,13 +45,15 @@ export default function AnalyticsPage() {
         <TabsList>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="projects">Projects</TabsTrigger>
-          {user.role === "boss" && <TabsTrigger value="team">Team</TabsTrigger>}
+          <TabsTrigger value="team">Team</TabsTrigger>
         </TabsList>
         <TabsContent value="performance" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Productivity Score</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Productivity Score
+                </CardTitle>
                 <LineChart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -59,7 +65,9 @@ export default function AnalyticsPage() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Task Completion</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Task Completion
+                </CardTitle>
                 <BarChart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -71,7 +79,9 @@ export default function AnalyticsPage() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Time Allocation</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Time Allocation
+                </CardTitle>
                 <PieChart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -86,7 +96,9 @@ export default function AnalyticsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Performance Trends</CardTitle>
-              <CardDescription>Your performance metrics over the last 6 months</CardDescription>
+              <CardDescription>
+                Your performance metrics over the last 6 months
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-[300px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
@@ -124,7 +136,9 @@ export default function AnalyticsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Time to Completion</CardTitle>
-                <CardDescription>Average days to complete by project type</CardDescription>
+                <CardDescription>
+                  Average days to complete by project type
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[200px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
@@ -134,48 +148,49 @@ export default function AnalyticsPage() {
             </Card>
           </div>
         </TabsContent>
+        <TabsContent value="team" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Team Performance</CardTitle>
+              <CardDescription>
+                Comparative performance across departments
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[300px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
+                Team Performance Radar Chart
+              </div>
+            </CardContent>
+          </Card>
 
-        {user.role === "boss" && (
-          <TabsContent value="team" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>Team Performance</CardTitle>
-                <CardDescription>Comparative performance across departments</CardDescription>
+                <CardTitle>Department Efficiency</CardTitle>
+                <CardDescription>
+                  Efficiency metrics by department
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[300px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
-                  Team Performance Radar Chart
+                <div className="h-[200px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
+                  Department Efficiency Bar Chart
                 </div>
               </CardContent>
             </Card>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Department Efficiency</CardTitle>
-                  <CardDescription>Efficiency metrics by department</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[200px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
-                    Department Efficiency Bar Chart
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Employee Turnover</CardTitle>
-                  <CardDescription>Turnover rate by quarter</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-[200px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
-                    Employee Turnover Line Chart
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-        )}
+            <Card>
+              <CardHeader>
+                <CardTitle>Employee Turnover</CardTitle>
+                <CardDescription>Turnover rate by quarter</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[200px] w-full bg-muted rounded-md flex items-center justify-center text-muted-foreground">
+                  Employee Turnover Line Chart
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
